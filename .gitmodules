@@ -1,0 +1,3 @@
+[submodule "ftgo-application"]
+	path = ftgo-application
+	url = https://github.com/microservices-patterns/ftgo-application

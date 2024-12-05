@@ -1,0 +1,37 @@
+diff --git a/ftgo-order-service/build.gradle b/ftgo-order-service/build.gradle
+index 94734f8..0f1515e 100644
+--- a/ftgo-order-service/build.gradle
++++ b/ftgo-order-service/build.gradle
+@@ -95,12 +95,19 @@ componentTest.dependsOn(componentTestsComposeUp)
+ 
+ protobuf {
+     protoc {
+-        // Download from repositories
+-        artifact = "com.google.protobuf:protoc:$protocVersion"
++        if (System.getenv("PROTOC_BIN_PATH") != null) {
++            path = System.getenv("PROTOC_BIN_PATH")
++        } else {
++            artifact = "com.google.protobuf:protoc:$protocVersion"
++        }
+     }
+     plugins {
+         grpc {
+-            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
++            if (System.getenv("PROTOC_GEN_GRPC_BIN_PATH") != null) {
++                path = System.getenv("PROTOC_GEN_GRPC_BIN_PATH")
++            } else {
++                artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
++            }
+         }
+     }
+     generateProtoTasks {
+@@ -174,6 +181,9 @@ dependencies {
+     compile "io.grpc:grpc-netty:${grpcVersion}"
+     compile "io.grpc:grpc-protobuf:${grpcVersion}"
+     compile "io.grpc:grpc-stub:${grpcVersion}"
++    if (System.getenv("PROTOC_GEN_GRPC_BIN_PATH") != null && System.getenv("PROTOC_BIN_PATH") != null) {
++        compile "com.google.protobuf:protobuf-java:4.28.3"
++    }
+ 
+     compile "io.microservices.tools.canvas:microservice-canvas-springmvc:$microserviceCanvasVersion"
+     compile "io.microservices.tools.canvas:microservice-canvas-extractor-tram-sagas:$microserviceCanvasVersion"
