@@ -4,12 +4,12 @@ kind: Service
 metadata:
   name: ftgo-restaurant-service
 spec:
+  type: LoadBalancer
   ports:
   - port: 8080
     targetPort: 8080
   selector:
     svc: ftgo-restaurant-service
-  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
       - name: ftgo-restaurant-service
-        image: msapatterns/ftgo-restaurant-service:latest
+        image: us-central1-docker.pkg.dev/ftgo-microservice-project/ftgo-docker-registry/ftgo-restaurant-service:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

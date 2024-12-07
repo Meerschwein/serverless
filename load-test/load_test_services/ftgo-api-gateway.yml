@@ -7,12 +7,12 @@ metadata:
     name: ftgo-api-gateway
     application: ftgo
 spec:
+  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 8080
   selector:
     svc: ftgo-api-gateway
-  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
       - name: ftgo-api-gateway
-        image: msapatterns/ftgo-api-gateway:latest
+        image: us-central1-docker.pkg.dev/ftgo-microservice-project/ftgo-docker-registry/ftgo-api-gateway:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
