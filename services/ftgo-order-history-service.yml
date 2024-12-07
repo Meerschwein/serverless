@@ -4,6 +4,7 @@ kind: Service
 metadata:
   name: ftgo-order-history-service
 spec:
+  type: ClusterIP
   ports:
   - port: 8080
     targetPort: 8080
@@ -29,7 +30,7 @@ spec:
     spec:
       containers:
       - name: ftgo-order-history-service
-        image: msapatterns/ftgo-order-history-service:latest
+        image: us-central1-docker.pkg.dev/ftgo-microservice-project/ftgo-docker-registry/ftgo-order-history-service:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

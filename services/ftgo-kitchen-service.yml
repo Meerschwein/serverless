@@ -4,6 +4,7 @@ kind: Service
 metadata:
   name: ftgo-kitchen-service
 spec:
+  type: ClusterIP
   ports:
   - port: 8080
     targetPort: 8080
@@ -29,7 +30,7 @@ spec:
     spec:
       containers:
       - name: ftgo-kitchen-service
-        image: msapatterns/ftgo-kitchen-service:latest
+        image: us-central1-docker.pkg.dev/ftgo-microservice-project/ftgo-docker-registry/ftgo-kitchen-service:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

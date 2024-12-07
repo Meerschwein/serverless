@@ -7,6 +7,7 @@ metadata:
     application: ftgo
     app: ftgo
 spec:
+  type: ClusterIP
   ports:
   - name: httpport
     port: 8080
@@ -37,7 +38,7 @@ spec:
     spec:
       containers:
       - name: ftgo-order-service
-        image: msapatterns/ftgo-order-service:latest
+        image: us-central1-docker.pkg.dev/ftgo-microservice-project/ftgo-docker-registry/ftgo-order-service:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

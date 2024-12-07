@@ -4,6 +4,7 @@ kind: Service
 metadata:
   name: ftgo-consumer-service
 spec:
+  type: ClusterIP
   ports:
   - port: 8080
     targetPort: 8080
@@ -29,7 +30,7 @@ spec:
     spec:
       containers:
       - name: ftgo-consumer-service
-        image: msapatterns/ftgo-consumer-service:latest
+        image: us-central1-docker.pkg.dev/ftgo-microservice-project/ftgo-docker-registry/ftgo-consumer-service:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
