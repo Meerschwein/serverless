@@ -55,6 +55,7 @@ SERVICES=(
     "ftgo-accounting-service"
     "ftgo-api-gateway"
     "ftgo-consumer-service"
+    "ftgo-delivery-service"
     "ftgo-kitchen-service"
     "ftgo-order-history-service"
     "ftgo-order-service"
@@ -69,23 +70,49 @@ done
 
 popd
 
+waitUntilPodRunning() {
+    POD_NAME=$1
+
+    until kubectl get pods | grep -q $POD_NAME; do
+        echo "Waiting for pod $POD_NAME to be running..."
+        sleep 3
+    done
+}
+
 kubectl apply -f "./stateful/ftgo-db-secret.yml"
-kubectl apply -f "./stateful/ftgo-mysql-deployment.yml"
+
 kubectl apply -f "./stateful/ftgo-zookeeper-deployment.yml"
+kubectl apply -f "./stateful/ftgo-mysql-deployment.yml"
+
+waitUntilPodRunning "ftgo-zookeeper-0"
+
 kubectl apply -f "./stateful/ftgo-kafka-deployment.yml"
-kubectl apply -f "./stateful/ftgo-dynamodb-local.yml"
 
-PODS=("ftgo-mysql-0" "ftgo-kafka-0" "ftgo-zookeeper-0" "ftgo-dynamodb-local")
+waitUntilPodRunning "ftgo-kafka-0"
+waitUntilPodRunning "ftgo-mysql-0"
 
-bash ./ftgo-application/deployment/kubernetes/scripts/kubernetes-wait-for-ready-pods.sh $PODS
+bash ./mkmessagetable.sh
+
+kubectl apply -f "./stateful/ftgo-cdc-service.yml"
+
+waitUntilPodRunning "ftgo-cdc-service"
 
 kubectl apply -f "./services/ftgo-accounting-service.yml"
-kubectl apply -f "./services/ftgo-api-gateway.yml"
 kubectl apply -f "./services/ftgo-consumer-service.yml"
+kubectl apply -f "./services/ftgo-delivery-service.yml"
 kubectl apply -f "./services/ftgo-kitchen-service.yml"
 kubectl apply -f "./services/ftgo-order-history-service.yml"
 kubectl apply -f "./services/ftgo-order-service.yml"
 kubectl apply -f "./services/ftgo-restaurant-service.yml"
 
-kubectl get services
-kubectl get pods
+waitUntilPodRunning "ftgo-accounting-service"
+waitUntilPodRunning "ftgo-consumer-service"
+waitUntilPodRunning "ftgo-delivery-service"
+waitUntilPodRunning "ftgo-kitchen-service"
+waitUntilPodRunning "ftgo-order-history-service"
+waitUntilPodRunning "ftgo-order-service"
+waitUntilPodRunning "ftgo-restaurant-service"
+
+kubectl apply -f "./services/ftgo-api-gateway.yml"
+
+waitUntilPodRunning "ftgo-api-gateway"
