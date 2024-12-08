@@ -83,6 +83,7 @@ kubectl apply -f "./stateful/ftgo-db-secret.yml"
 
 kubectl apply -f "./stateful/ftgo-zookeeper-deployment.yml"
 kubectl apply -f "./stateful/ftgo-mysql-deployment.yml"
+kubectl apply -f "./stateful/ftgo-dynamodb-local.yml"
 
 waitUntilPodRunning "ftgo-zookeeper-0"
 
@@ -96,6 +97,9 @@ bash ./mkmessagetable.sh
 kubectl apply -f "./stateful/ftgo-cdc-service.yml"
 
 waitUntilPodRunning "ftgo-cdc-service"
+waitUntilPodRunning "ftgo-dynamodb-local"
+
+kubectl apply -f "./stateful/ftgo-dynamodb-init.yml"
 
 kubectl apply -f "./services/ftgo-accounting-service.yml"
 kubectl apply -f "./services/ftgo-consumer-service.yml"
