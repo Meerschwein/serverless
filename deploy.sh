@@ -92,7 +92,7 @@ kubectl apply -f "./stateful/ftgo-kafka-deployment.yml"
 waitUntilPodRunning "ftgo-kafka-0"
 waitUntilPodRunning "ftgo-mysql-0"
 
-bash ./mkmessagetable.sh
+bash ./mysql_missing_table_hack.sh
 
 kubectl apply -f "./stateful/ftgo-cdc-service.yml"
 
