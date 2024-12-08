@@ -11,7 +11,7 @@ kubectl apply -f "./load-test/load_test_services/ftgo-restaurant-service.yml"
 waitUntilPodRunning() {
     POD_NAME=$1
 
-    until kubectl get pods | grep -q $POD_NAME; do
+    until kubectl get pods | grep Running | grep -q $POD_NAME; do
         echo "Waiting for pod $POD_NAME to be running..."
         sleep 3
     done
