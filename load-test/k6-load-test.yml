@@ -1,0 +1,37 @@
+version: "3"
+services:
+  k6_create_order_test:
+    image: loadimpact/k6
+    container_name: create_order_test_k6
+    volumes:
+      - ./:/specs
+    command: run /load_test_files/create_order_test.js
+    ports:
+      - "6565:6565"
+
+  k6_revise_order_test:
+    image: loadimpact/k6
+    container_name: revise_order_test_k6
+    volumes:
+      - ./:/specs
+    command: run /load_test_files/revise_order_test.js
+    ports:
+      - "6566:6566"
+
+  k6_cancel_order_test:
+    image: loadimpact/k6
+    container_name: cancel_order_test_k6
+    volumes:
+      - ./:/specs
+    command: run /load_test_files/cancel_order_test.js
+    ports:
+      - "6566:6566"
+
+  k6_accept_ticket_test:
+    image: loadimpact/k6
+    container_name: accept_ticket_test_k6
+    volumes:
+      - ./:/specs
+    command: run /load_test_files/accept_ticket_test.js
+    ports:
+      - "6566:6566"
