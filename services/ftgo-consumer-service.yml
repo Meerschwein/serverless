@@ -35,6 +35,13 @@ spec:
         ports:
         - containerPort: 8080
           name: httpport
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
         env:
         - name: JAVA_OPTS
           value: -Dsun.net.inetaddr.ttl=30 -Xmx192m
@@ -68,3 +75,24 @@ spec:
     matchLabels:
       svc: ftgo-consumer-service
       application: ftgo
+
+---
+
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: ftgo-consumer-service
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ftgo-consumer-service
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 40
