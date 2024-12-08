@@ -18,6 +18,16 @@ CREATE TABLE message (
     message_partition SMALLINT,
     creation_time BIGINT
 );
+CREATE TABLE events (
+    event_id VARCHAR(255) PRIMARY KEY,
+    event_type VARCHAR(255) NOT NULL,
+    event_data TEXT NOT NULL,
+    entity_type VARCHAR(255) NOT NULL,
+    entity_id VARCHAR(255) NOT NULL,
+    triggering_event VARCHAR(255),
+    metadata JSON,
+    published BOOLEAN DEFAULT FALSE
+);
 EOF
 )
 
