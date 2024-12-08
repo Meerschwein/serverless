@@ -16,6 +16,9 @@ scipt: ./load_test.sh
 needs:
     - k6
 
+
+If you want to run the load test by using the k6 cloud solution, follow the instructions at line 38 in the `load_test.sh` script
+
 ---
 
 # Presentation

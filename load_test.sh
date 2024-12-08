@@ -34,6 +34,9 @@ pushd ./load-test
 
 ./perform-load-test.sh run
 
+# Uncomment following line if using k6 cloud solution, comment out the line above
+# ./perform-load-test.sh cloud
+
 popd
 
 echo "Done"
