@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
       - name: e2e-tests
-        image: gcr.io/your-project-id/e2e-tests:latest
+        image: us-central1-docker.pkg.dev/ftgo-microservice-project//e2e-tests:latest
         env:
         - name: CONSUMER_SERVICE_URL
           value: "./services/ftgo-consumer-service.yml" 
