@@ -1,5 +1,8 @@
 #! /usr/bin/env bash
 
+set -e -u -o pipefail
+set -x
+
 kubectl apply -f "./load-test/load_test_services/ftgo-accounting-service.yml"
 kubectl apply -f "./load-test/load_test_services/ftgo-api-gateway.yml"
 kubectl apply -f "./load-test/load_test_services/ftgo-consumer-service.yml"
