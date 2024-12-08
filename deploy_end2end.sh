@@ -102,7 +102,7 @@ SERVICES =(
 )
 
 #apply integration test files
-kubectl apply -f "e2e-tests-deployment.yml"
+kubectl apply -f ""
 
 #execute the end-to-end tests after deployment
 kubectl run e2e-tests --image=gcr.io/$GCP_PROJECT_ID/e2e-tests:latest \
