@@ -12,7 +12,7 @@ needs:
 
 ## Load test script
 
-scipt: ./load_test.sh
+script: ./load_test.sh
 (needs to be deployed first)
 
 needs:
